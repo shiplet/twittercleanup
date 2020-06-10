@@ -1,4 +1,3 @@
-const tweets = require("./tweet.json");
 const Twitter = require("twitter-lite");
 
 const CUTOFF_POINT = "2019-12-09";
@@ -15,23 +14,36 @@ function sleep(ms) {
   });
 }
 
-var ids = tweets
-  .sort(
-    (a, b) => Date.parse(a.tweet.created_at) - Date.parse(b.tweet.created_at)
-  )
-  .filter((v) => Date.parse(v.tweet.created_at) <= REFERENCE_DATE)
-  .reduce((acc, v) => {
-    acc.push(v.tweet.id);
-    return acc;
-  }, []);
+function buildTweets() {
+  let tweets;
+  try {
+    tweets = require("./tweet.json");
+  } catch (e) {
+    console.error("\n--- No tweet.json file found ---\n");
+    process.exit(1);
+  }
 
-var idsBatched = [];
+  var ids = tweets
+    .sort(
+      (a, b) => Date.parse(a.tweet.created_at) - Date.parse(b.tweet.created_at)
+    )
+    .filter((v) => Date.parse(v.tweet.created_at) <= REFERENCE_DATE)
+    .reduce((acc, v) => {
+      acc.push(v.tweet.id);
+      return acc;
+    }, []);
 
-for (var i = 0; i < ids.length; i += 10) {
-  idsBatched.push(ids.slice(i, i + 10));
+  var idsBatched = [];
+
+  for (var i = 0; i < ids.length; i += 10) {
+    idsBatched.push(ids.slice(i, i + 10));
+  }
+
+  return idsBatched;
 }
 
-const deleteTweets = async () => {
+const DeleteTweets = async () => {
+  const idsBatched = buildTweets();
   const client = new Twitter({
     subdomain: "api",
     version: "1.1",
@@ -77,12 +89,10 @@ const deleteTweets = async () => {
   }
 };
 
-deleteTweets()
-  .then(() => {
-    console.log("\nfinished");
-    process.exit(0);
-  })
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  });
+module.exports = {
+  ACCESS_TOKEN_KEY,
+  ACCESS_TOKEN_SECRET,
+  CONSUMER_KEY,
+  CONSUMER_SECRET,
+  DeleteTweets
+};
