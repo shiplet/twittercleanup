@@ -44,6 +44,7 @@ function buildTweets() {
 
 const DeleteTweets = async () => {
   const idsBatched = buildTweets();
+  const idsTotal = idsBatched.reduce((acc, v) => (acc += v.length), 0);
   const client = new Twitter({
     subdomain: "api",
     version: "1.1",
@@ -67,17 +68,19 @@ const DeleteTweets = async () => {
 
   for (var i = 0; i < idsBatched.length; i++) {
     let v = idsBatched[i];
-    v.forEach(async id => {
+    v.forEach(async (id) => {
       try {
-        let deleteRes = await client.post("statuses/destroy", { id });
+        await client.post("statuses/destroy", { id });
         successes++;
       } catch (e) {
         errors++;
       }
       counter++;
-      let progress = Math.round((counter / ids.length) * 100);
+      let progress = Math.round((counter / idsTotal) * 100);
       process.stdout.write(
-        `\r[${"=".repeat(progress)}>${" ".repeat(100 - progress)}] ${counter} / ${ids.length} | successes: ${successes} | errors: ${errors}`
+        `\r[${"=".repeat(progress)}>${" ".repeat(
+          100 - progress
+        )}] ${counter} / ${idsTotal} | successes: ${successes} | errors: ${errors}`
       );
     });
     await sleep(1000);
@@ -89,5 +92,5 @@ module.exports = {
   ACCESS_TOKEN_SECRET,
   CONSUMER_KEY,
   CONSUMER_SECRET,
-  DeleteTweets
+  DeleteTweets,
 };
