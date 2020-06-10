@@ -1,0 +1,15 @@
+{
+  "name": "twittercleanup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "A simple NodeJS script for deleting old tweets",
+  "repository": "git@github.com:shiplet/twittercleanup.git",
+  "author": "Shiplet",
+  "scripts": {
+    "clean": "node index.js"
+  },
+  "dependencies": {
+    "twitter-lite": "^0.13.0"
+  }
+}
