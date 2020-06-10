@@ -67,7 +67,7 @@ const DeleteTweets = async () => {
 
   for (var i = 0; i < idsBatched.length; i++) {
     let v = idsBatched[i];
-    v.forEach(async (id, index) => {
+    v.forEach(async id => {
       try {
         let deleteRes = await client.post("statuses/destroy", { id });
         successes++;
