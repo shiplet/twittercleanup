@@ -71,18 +71,13 @@ const DeleteTweets = async () => {
       try {
         let deleteRes = await client.post("statuses/destroy", { id });
         successes++;
-        // console.log("now here");
       } catch (e) {
         errors++;
       }
       counter++;
       let progress = Math.round((counter / ids.length) * 100);
       process.stdout.write(
-        `\r[${"=".repeat(progress)}>${" ".repeat(
-          100 - progress
-        )}] ${counter} / ${
-          ids.length
-        } | successes: ${successes} | errors: ${errors}`
+        `\r[${"=".repeat(progress)}>${" ".repeat(100 - progress)}] ${counter} / ${ids.length} | successes: ${successes} | errors: ${errors}`
       );
     });
     await sleep(1000);
