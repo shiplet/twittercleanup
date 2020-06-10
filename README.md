@@ -13,7 +13,7 @@ These variables live in `index.js`.
 To run:
 
 ```bash
-$ yarn twitter-cleanup
+$ yarn twittercleanup
 ```
 
 ## Note

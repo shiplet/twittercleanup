@@ -7,7 +7,7 @@
   "repository": "git@github.com:shiplet/twittercleanup.git",
   "author": "Shiplet",
   "scripts": {
-    "twitter-cleanup": "node scripts/twittercleanup.js",
+    "twittercleanup": "node scripts/twittercleanup.js",
     "protect": "node scripts/protect.js"
   },
   "husky": {
