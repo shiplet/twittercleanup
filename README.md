@@ -2,6 +2,8 @@
 
 A lightly configurable script to delete your old tweets.
 
+Current configuration deletes all tweets sent before a certain date.
+
 ## Usage
 
 You'll need to fill out the variables labeled `ACCESS_TOKEN_KEY, ACCESS_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET` with values generated in your Twitter developers' dashboard.
