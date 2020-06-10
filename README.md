@@ -1,4 +1,4 @@
-# twittercleanup
+# `twittercleanup`
 
 A lightly configurable script to delete your old tweets.
 
