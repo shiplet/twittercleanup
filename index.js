@@ -3,10 +3,10 @@ const Twitter = require("twitter-lite");
 const CUTOFF_POINT = "2019-12-09";
 const REFERENCE_DATE = Date.parse(CUTOFF_POINT);
 
-const ACCESS_TOKEN_KEY = "";
-const ACCESS_TOKEN_SECRET = "";
 const CONSUMER_KEY = "";
 const CONSUMER_SECRET = "";
+const ACCESS_TOKEN_KEY = "";
+const ACCESS_TOKEN_SECRET = "";
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -43,15 +43,13 @@ function buildTweets() {
 }
 
 const DeleteTweets = async () => {
-  const idsBatched = buildTweets();
-  const idsTotal = idsBatched.reduce((acc, v) => (acc += v.length), 0);
   const client = new Twitter({
     subdomain: "api",
     version: "1.1",
-    access_token_key: ACCESS_TOKEN_KEY,
-    access_token_secret: ACCESS_TOKEN_SECRET,
     consumer_key: CONSUMER_KEY,
     consumer_secret: CONSUMER_SECRET,
+    access_token_key: ACCESS_TOKEN_KEY,
+    access_token_secret: ACCESS_TOKEN_SECRET,
   });
 
   try {
@@ -59,9 +57,13 @@ const DeleteTweets = async () => {
     console.log("credentials verified");
   } catch (e) {
     console.error("failed to verify creds", e);
+    process.exit(1);
   }
 
+  const idsBatched = buildTweets();
+  const idsTotal = idsBatched.reduce((acc, v) => (acc += v.length), 0);
   console.log("beginning deletion");
+
   let counter = 0;
   let successes = 0;
   let errors = 0;
