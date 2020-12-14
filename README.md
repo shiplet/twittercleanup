@@ -12,6 +12,8 @@ You'll also need to determine a `CUTOFF_DATE` and populate that variable as well
 
 These variables live in `index.js`.
 
+To get your `tweets.json`, you'll need to download all of your Twitter data via their archive tools, and then convert the `tweets.js` into JSON format.
+
 To run:
 
 ```bash
